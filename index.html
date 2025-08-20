@@ -117,26 +117,100 @@
         .social-icon {
             @apply w-8 h-8 mx-1 text-gray-300 hover:text-cyan-400 transition-colors duration-200;
         }
+
+        /* Slideshow specific styles */
+        .slideshow-container {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+            border-radius: 1rem; /* rounded-xl */
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            border: 1px solid #4a4a4a; /* border-gray-700 */
+        }
+        .mySlides {
+            display: none;
+        }
+        .mySlides img {
+            width: 100%;
+            display: block;
+            border-radius: 1rem; /* Inherit from container */
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .text-slide {
+            color: #f2f2f2;
+            font-size: 15px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 0 0 1rem 1rem;
+        }
+        .dots-container {
+            text-align: center;
+            padding: 20px;
+        }
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+        .active-dot, .dot:hover {
+            background-color: #717171;
+        }
     </style>
 </head>
 <body class="text-gray-100">
 
+    <!-- Global Firebase Error Message Display -->
+    <div id="firebase-error-message" class="fixed top-0 left-0 right-0 bg-red-800 text-white text-center py-2 px-4 z-50 hidden">
+        <!-- Error message will be displayed here -->
+    </div>
+
     <!-- Navigation Bar -->
     <nav class="bg-gray-900 bg-opacity-80 backdrop-blur-md shadow-lg py-4 px-6 md:px-12 fixed w-full z-20 top-0 border-b border-gray-700">
         <div class="container mx-auto flex justify-between items-center">
-            <!-- Brand Logo/Name - Updated to use the provided image -->
+            <!-- Brand Logo/Name -->
             <a href="#" class="text-3xl font-bold text-cyan-400 tracking-wide flex items-center" style="font-family: 'Orbitron', sans-serif;">
-                <img src="http://googleusercontent.com/file_content/1" alt="Ask Guru Logo" class="h-8 md:h-10 mr-2"> <!-- Added image logo -->
-                <span class="hidden md:block">ASK GURU</span> <!-- Keep text for larger screens if needed -->
+                <img src="http://googleusercontent.com/file_content/1" alt="Ask Guru Logo" class="h-8 md:h-10 mr-2">
+                <span class="hidden md:block">ASK GURU</span>
             </a>
             <!-- Desktop Navigation Links -->
             <div class="hidden md:flex space-x-8">
                 <a href="#home" class="text-gray-300 hover:text-cyan-400 transition duration-300">Home</a>
                 <a href="#about" class="text-gray-300 hover:text-cyan-400 transition duration-300">About Us</a>
                 <a href="#products" class="text-gray-300 hover:text-cyan-400 transition duration-300">Products</a>
-                <a href="#shop" class="text-gray-300 hover:text-cyan-400 transition duration-300">Shop</a>
-                <a href="#banner-wavers" class="text-gray-300 hover:text-cyan-400 transition duration-300">Banner Wavers</a>
+                <a href="#wave-journey-planner" class="text-gray-300 hover:text-cyan-400 transition duration-300">Wave Journey</a>
                 <a href="#innovations" class="text-gray-300 hover:text-cyan-400 transition duration-300">Innovations</a>
+                <a href="#community" class="text-gray-300 hover:text-cyan-400 transition duration-300">Community</a>
                 <a href="#contact" class="text-gray-300 hover:text-cyan-400 transition duration-300">Contact</a>
             </div>
             <!-- Mobile Menu Button (Hamburger Icon) -->
@@ -151,9 +225,9 @@
             <a href="#home" class="block text-gray-300 hover:text-cyan-400 transition duration-300 py-2 px-4 rounded-md">Home</a>
             <a href="#about" class="block text-gray-300 hover:text-cyan-400 transition duration-300 py-2 px-4 rounded-md">About Us</a>
             <a href="#products" class="block text-gray-300 hover:text-cyan-400 transition duration-300 py-2 px-4 rounded-md">Products</a>
-            <a href="#shop" class="block text-gray-300 hover:text-cyan-400 transition duration-300 py-2 px-4 rounded-md">Shop</a>
-            <a href="#banner-wavers" class="block text-gray-300 hover:text-cyan-400 transition duration-300 py-2 px-4 rounded-md">Banner Wavers</a>
+            <a href="#wave-journey-planner" class="block text-gray-300 hover:text-cyan-400 transition duration-300 py-2 px-4 rounded-md">Wave Journey</a>
             <a href="#innovations" class="block text-gray-300 hover:text-cyan-400 transition duration-300 py-2 px-4 rounded-md">Innovations</a>
+            <a href="#community" class="block text-gray-300 hover:text-cyan-400 transition duration-300 py-2 px-4 rounded-md">Community</a>
             <a href="#contact" class="block text-gray-300 hover:text-cyan-400 transition duration-300 py-2 px-4 rounded-md">Contact</a>
         </div>
     </nav>
@@ -168,6 +242,10 @@
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500 opacity-5 rounded-full filter blur-3xl"></div>
         </div>
         <div class="container mx-auto text-center px-4 relative z-10">
+            <!-- Ask Guru Logo Image (Hero) -->
+            <div class="mb-8 animate-fade-in-down">
+                <img src="http://googleusercontent.com/file_content/1" alt="Ask Guru large circular logo" class="mx-auto w-32 h-32 md:w-48 md:h-48 rounded-full shadow-xl border-4 border-cyan-500">
+            </div>
             <!-- Main Heading with animated text -->
             <h1 class="text-6xl md:text-8xl font-extrabold leading-tight mb-6 animate-fade-in-down drop-shadow-lg hero-title">
                 <span class="text-fuchsia-400">ASK</span> <span class="text-cyan-400">GURU</span>
@@ -190,12 +268,12 @@
             <h2 class="section-heading">About Ask Guru</h2>
             <div class="md:flex items-center justify-center gap-8">
                 <div class="w-full md:w-1/3 mb-8 md:mb-0">
-                    <!-- Ask Guru logo/icon -->
-                    <img src="http://googleusercontent.com/file_content/1" alt="Ask Guru Logo" class="rounded-full mx-auto shadow-xl border-4 border-cyan-500 w-64 h-64 object-contain">
+                    <!-- Ask Guru Logo Image (About Section) -->
+                    <img src="http://googleusercontent.com/file_content/1" alt="Ask Guru brand emblem" class="rounded-full mx-auto shadow-xl border-4 border-cyan-500 w-64 h-64 object-contain">
                 </div>
                 <div class="w-full md:w-2/3 text-lg leading-relaxed text-left text-gray-200">
                     <p class="mb-4">
-                        At Ask Guru, we are dedicated to perfecting the art of *360 waves*. Our mission is to combine cutting-edge design with premium materials to deliver brushes and hair care products that help you achieve and maintain the sharpest, deepest wave patterns. We understand the dedication it takes to lay those waves, and we're here to provide the ultimate tools.
+                        At Ask Guru, we are dedicated to perfecting the art of **360 waves**. Our mission is to combine cutting-edge design with premium materials to deliver brushes and hair care products that help you achieve and maintain the sharpest, deepest wave patterns. We understand the dedication it takes to lay those waves, and we're here to provide the ultimate tools.
                     </p>
                     <p class="mb-4">
                         Driven by a passion for pristine waves, our team constantly researches and develops advanced bristle configurations, ergonomic brush handles, and nourishing hair formulations. We ensure every product enhances your natural wave potential and simplifies your grooming routine.
@@ -214,105 +292,127 @@
             <h2 class="section-heading">Our Revolutionary Products</h2>
             <p class="text-xl text-gray-300 mb-12">Experience the future of wave care from Ask Guru.</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Product Slideshow -->
+            <div class="slideshow-container mb-16">
+                <div class="mySlides fade">
+                    <img src="https://placehold.co/800x450/4a2e5d/00ffff?text=Ask+Guru+Brush+Collection" alt="Ask Guru Brush Collection">
+                    <div class="text-slide">Discover the perfect brush for your wave journey.</div>
+                </div>
+                <div class="mySlides fade">
+                    <img src="https://placehold.co/800x450/6a4c9c/ff00ff?text=Whip+Shampoo+Preview" alt="Whip Shampoo Preview">
+                    <div class="text-slide">Whip Shampoo: The ultimate lather for laid waves.</div>
+                </div>
+                <div class="mySlides fade">
+                    <img src="https://placehold.co/800x450/2a4a5a/6366f1?text=Hard+Brush+Action" alt="Hard Bristle Brush in Action">
+                    <div class="text-slide">Hard Bristle Brush: Deep compression for ultimate waves.</div>
+                </div>
+                <div class="mySlides fade">
+                    <img src="https://placehold.co/800x450/1a3a4a/a78bfa?text=Soft+Brush+Shine" alt="Soft Bristle Brush for Shine">
+                    <div class="text-slide">Soft Bristle Brush: Lay down frizz and add brilliant shine.</div>
+                </div>
+
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <div class="dots-container">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
                 <!-- Product Card: Whip Shampoo (Highlight) -->
                 <div class="card border-fuchsia-500 shadow-xl shadow-fuchsia-500/30">
                     <div class="text-fuchsia-400 mb-4">
-                        <!-- SVG Icon for shampoo/liquid -->
+                        <!-- Icon for shampoo/liquid -->
                         <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-2.414-2.414A1 1 0 0015.586 6H7a2 2 0 00-2 2v11a2 2 0 002 2zM10 7V4m0 0l-1-1m1 1l1-1m0 3v4"></path></svg>
                     </div>
                     <h3 class="text-3xl font-bold text-fuchsia-400 mb-4 animate-pulse">Whip Shampoo - Coming Soon!</h3>
                     <p class="text-gray-300 mb-4">
-                        Prepare for the ultimate wash. Our revolutionary *Whip Shampoo* creates a rich, cleansing lather that deeply purifies your scalp and hair, preparing your waves for optimal definition and shine. Formulated to be gentle yet effective.
+                        Prepare for the ultimate wash. Our revolutionary **Whip Shampoo** creates a rich, cleansing lather that deeply purifies your scalp and hair, preparing your waves for optimal definition and shine. Formulated to be gentle yet effective.
                     </p>
-                    <a href="#" class="text-fuchsia-400 hover:underline font-semibold">Learn More &rarr;</a>
+                    <a href="#" class="btn-primary text-sm px-6 py-2 mt-4">Notify Me!</a>
                 </div>
 
-                <!-- Product Card 2: Quantum Wave Brushes -->
+                <!-- Product Card 2: Hard Bristle Wave Brush -->
                 <div class="card">
                     <div class="text-cyan-400 mb-4">
-                        <!-- SVG Icon for hair brush -->
-                        <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        <!-- Icon for hard brush -->
+                        <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Quantum Wave Brushes</h3>
-                    <p class="text-gray-300">Precision-engineered brushes with multi-tiered bristles for optimal hair compression, promoting deeper waves and superior shine without snagging.</p>
-                    <a href="#" class="text-cyan-400 hover:underline font-semibold mt-4 block">View Collection &rarr;</a>
+                    <h3 class="text-2xl font-bold mb-4">Hard Bristle Wave Brush</h3>
+                    <p class="text-gray-300">Designed for deeper wave patterns and stubborn hair. Provides powerful pull and excellent compression for ultimate wave development during daily brushing sessions.</p>
+                    <a href="#" class="btn-primary text-sm px-6 py-2 mt-4">Buy Now</a>
                 </div>
 
-                <!-- Product Card 3: Hydro-Seal Wave Pomade -->
+                <!-- Product Card 3: Medium Bristle Wave Brush -->
                 <div class="card">
                     <div class="text-purple-400 mb-4">
-                        <!-- SVG Icon for protection/shine -->
-                        <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.047A12.003 12.003 0 002.944 12c0 2.89.972 5.688 2.85 7.075a11.916 11.916 0 007.29 2.083 11.916 11.916 0 007.29-2.083c1.878-1.387 2.85-4.185 2.85-7.075a12.003 12.003 0 00-3.322-8.016z"></path></svg>
+                        <!-- Icon for medium brush -->
+                        <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Hydro-Seal Wave Pomade</h3>
-                    <p class="text-gray-300">A revolutionary pomade that locks in moisture and lays down hairs, providing superior hold and shine for long-lasting, defined wave patterns.</p>
-                    <a href="#" class="text-purple-400 hover:underline font-semibold mt-4 block">Discover More &rarr;</a>
+                    <h3 class="text-2xl font-bold mb-4">Medium Bristle Wave Brush</h3>
+                    <p class="text-gray-300">The versatile choice for all stages of wave development. Offers balanced firmness for consistent pull and comfortable brushing, ideal for daily grooming.</p>
+                    <a href="#" class="btn-primary text-sm px-6 py-2 mt-4">Buy Now</a>
                 </div>
+
+                <!-- Product Card 4: Soft Bristle Wave Brush -->
+                <div class="card col-span-1 md:col-span-2 lg:col-span-1 mx-auto">
+                    <div class="text-blue-400 mb-4">
+                        <!-- Icon for soft brush -->
+                        <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 21h4c2.21 0 4-1.79 4-4s-1.79-4-4-4h-4c-2.21 0-4 1.79-4 4s1.79 4 4 4zM12 6V3m0 3a2 2 0 100 4 2 2 0 000-4z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Soft Bristle Wave Brush</h3>
+                    <p class="text-gray-300">Perfect for laying down the top layer of your waves and finishing. Gentle on the scalp, it adds shine and maintains your pattern without over-brushing.</p>
+                    <a href="#" class="btn-primary text-sm px-6 py-2 mt-4">Buy Now</a>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- Shop Section - New Section for selling brushes -->
-    <section id="shop" class="py-16 md:py-24 bg-gray-950">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="section-heading">Shop Ask Guru Brushes</h2>
-            <p class="text-xl text-gray-300 mb-12">Find the perfect brush to lay down your waves, from soft to hard.</p>
+    <!-- Personalized Wave Journey Section -->
+    <section id="wave-journey-planner" class="py-16 md:py-24 bg-gray-950 text-white">
+        <div class="container mx-auto px-4 text-center max-w-4xl">
+            <h2 class="section-heading">Your Personalized Wave Journey ✨</h2>
+            <p class="text-xl text-gray-300 mb-12">Let the Ask Guru AI craft a custom wave routine just for you!</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Brush Product Card: Hard Texture -->
-                <div class="card border-blue-500 shadow-xl shadow-blue-500/30">
-                    <img src="https://placehold.co/400x300/3b82f6/ffffff?text=Hard+Brush" alt="Hard Texture Wave Brush" class="rounded-lg mb-4 w-full h-auto object-cover border border-blue-600">
-                    <h3 class="text-2xl font-bold text-blue-400 mb-2">Hard Texture Wave Brush</h3>
-                    <p class="text-gray-300 mb-4">
-                        Designed for coarser hair textures, this brush provides maximum pull and deep compression, ideal for establishing and maintaining strong wave patterns.
-                    </p>
-                    <p class="text-3xl font-bold text-white mb-4">$24.99</p>
-                    <button class="btn-primary w-full">Buy Now</button>
+            <div class="bg-gray-800 bg-opacity-70 backdrop-blur-sm rounded-xl shadow-lg p-8 border border-gray-700 text-left">
+                <h3 class="text-3xl font-bold text-cyan-400 mb-6">Build Your Routine</h3>
+                <form id="wave-routine-form">
+                    <div class="mb-4">
+                        <label for="wave-stage" class="block text-gray-200 text-sm font-bold mb-2">Current Wave Stage:</label>
+                        <select id="wave-stage" class="shadow appearance-none border border-gray-600 rounded w-full py-3 px-4 bg-gray-700 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
+                            <option value="">Select your stage</option>
+                            <option value="Beginner (just started)">Beginner (just started)</option>
+                            <option value="Intermediate (waves forming)">Intermediate (waves forming)</option>
+                            <option value="Advanced (consistent waves)">Advanced (consistent waves)</option>
+                            <option value="Wolfing (growing hair for deeper waves)">Wolfing (growing hair for deeper waves)</option>
+                            <option value="Maintaining (keeping waves sharp)">Maintaining (keeping waves sharp)</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="hair-type" class="block text-gray-200 text-sm font-bold mb-2">Hair Texture:</label>
+                        <select id="hair-type" class="shadow appearance-none border border-gray-600 rounded w-full py-3 px-4 bg-gray-700 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
+                            <option value="">Select your hair type</option>
+                            <option value="Coarse/Thick">Coarse/Thick</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Fine/Soft">Fine/Soft</option>
+                        </select>
+                    </div>
+                    <div class="mb-6">
+                        <label for="wave-goal" class="block text-gray-200 text-sm font-bold mb-2">Your Wave Goals (e.g., deeper waves, fixing forks, more shine):</label>
+                        <textarea id="wave-goal" rows="4" class="shadow appearance-none border border-gray-600 rounded w-full py-3 px-4 bg-gray-700 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="I want to get my crown spinning and connect my waves." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary w-full">Get My Custom Routine ✨</button>
+                </form>
+                <div id="routine-loading-indicator" class="mt-4 text-center text-cyan-400 hidden">
+                    <p>Generating your custom wave journey... Please wait.</p>
                 </div>
-
-                <!-- Brush Product Card: Medium Texture -->
-                <div class="card border-green-500 shadow-xl shadow-green-500/30">
-                    <img src="https://placehold.co/400x300/22c55e/ffffff?text=Medium+Brush" alt="Medium Texture Wave Brush" class="rounded-lg mb-4 w-full h-auto object-cover border border-green-600">
-                    <h3 class="text-2xl font-bold text-green-400 mb-2">Medium Texture Wave Brush</h3>
-                    <p class="text-gray-300 mb-4">
-                        Our versatile medium brush offers a balanced blend of firmness and flexibility, perfect for daily brushing and maintaining well-defined waves across various hair types.
-                    </p>
-                    <p class="text-3xl font-bold text-white mb-4">$22.99</p>
-                    <button class="btn-primary w-full">Buy Now</button>
-                </div>
-
-                <!-- Brush Product Card: Soft Texture -->
-                <div class="card border-fuchsia-500 shadow-xl shadow-fuchsia-500/30">
-                    <img src="https://placehold.co/400x300/f472b6/ffffff?text=Soft+Brush" alt="Soft Texture Wave Brush" class="rounded-lg mb-4 w-full h-auto object-cover border border-fuchsia-600">
-                    <h3 class="text-2xl font-bold text-fuchsia-400 mb-2">Soft Texture Wave Brush</h3>
-                    <p class="text-gray-300 mb-4">
-                        Gentle yet effective, this brush is ideal for laying down frizz, polishing your waves, and use on sensitive scalps or fine hair textures, providing a natural shine.
-                    </p>
-                    <p class="text-3xl font-bold text-white mb-4">$19.99</p>
-                    <button class="btn-primary w-full">Buy Now</button>
-                </div>
-            </div>
-
-            <!-- Gemini API Integration: Wave Brush Advisor -->
-            <div class="mt-20 p-8 bg-gray-800 bg-opacity-70 backdrop-blur-md rounded-xl shadow-lg border border-gray-700 max-w-2xl mx-auto">
-                <h3 class="text-3xl font-bold text-cyan-400 mb-6">Wave Brush Advisor ✨</h3>
-                <p class="text-gray-300 mb-6">Tell us about your hair type and wave goals, and our AI will recommend the perfect Ask Guru Brush for you!</p>
-
-                <div class="mb-6 text-left">
-                    <label for="waveGoalInput" class="block text-gray-200 text-sm font-bold mb-2">Describe your hair and wave goals:</label>
-                    <textarea id="waveGoalInput" rows="4" class="shadow appearance-none border border-gray-600 rounded w-full py-3 px-4 bg-gray-700 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="e.g., 'I have coarse hair and want to deepen my waves.', 'My hair is fine, and I need a brush for daily maintenance.'"></textarea>
-                </div>
-                <button id="getBrushRecommendationBtn" class="btn-primary w-full md:w-auto flex items-center justify-center">
-                    <span id="recommendationButtonText">Get Recommendation</span>
-                    <div id="recommendationLoadingSpinner" class="loader ml-3 hidden"></div>
-                </button>
-                <div id="recommendationResult" class="mt-8 p-6 bg-gray-900 border border-cyan-500 rounded-lg text-left text-gray-200 hidden">
-                    <p class="font-semibold text-lg mb-2 text-cyan-300">Your Personalized Brush Recommendation:</p>
-                    <div id="recommendationText"></div>
-                </div>
-                <div id="recommendationError" class="mt-4 p-4 bg-red-900 border border-red-500 rounded-lg text-left text-red-200 hidden">
-                    <p>An error occurred while getting the recommendation. Please try again later.</p>
+                <div id="routine-response-container" class="mt-6 p-4 bg-gray-700 rounded-lg hidden">
+                    <p class="text-gray-300 text-sm italic">Your Guru Routine:</p>
+                    <div id="routine-response" class="text-white mt-2 prose prose-invert max-w-none"></div>
                 </div>
             </div>
         </div>
@@ -392,67 +492,122 @@
     <!-- Innovations Section -->
     <section id="innovations" class="py-16 md:py-24 bg-gray-900">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="section-heading">Our Innovations</h2>
+            <h2 class="section-heading">Our Innovations & AI Tools</h2>
             <p class="text-xl text-gray-300 mb-12">Witness the future of wave grooming through our latest breakthroughs, now enhanced with AI!</p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Innovation Card 1: Smart Brush Technology with AI Q&A -->
+                <!-- Innovation Card 1: Smart Brush Technology -->
                 <div class="card text-left">
                     <img src="https://placehold.co/600x400/3b82f6/ffffff?text=Smart+Brush+Tech" alt="Smart Brush Concept" class="rounded-lg mb-4 w-full h-auto border border-blue-600">
                     <h3 class="text-xl font-bold mb-2 text-cyan-400">Smart Brush Technology</h3>
                     <p class="text-gray-300 mb-4">Conceptual brush with integrated sensors to optimize brushing patterns and pressure for faster, more uniform wave development.</p>
                     <a href="#" class="text-cyan-400 hover:underline font-semibold">View Concept &rarr;</a>
-
-                    <!-- Smart Brushing Q&A - AI Integration -->
-                    <div class="mt-4 p-4 bg-gray-800 rounded-lg border border-gray-600">
-                        <h4 class="text-xl font-bold mb-3 text-cyan-300">Smart Brushing Q&A 🗨️</h4>
-                        <p class="text-gray-400 text-sm mb-3">Ask our AI for tips on brushing techniques, brush care, or wave maintenance!</p>
-                        <textarea id="brushingQuestionInput" rows="3" class="shadow appearance-none border border-gray-600 rounded w-full py-2 px-3 bg-gray-700 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="e.g., 'How often should I brush for 360 waves?'"></textarea>
-                        <button id="askBrushingQuestionBtn" class="btn-primary w-full text-sm mt-3 flex items-center justify-center">
-                            <span id="brushingQuestionButtonText">Ask Guru AI</span>
-                            <div id="brushingQuestionLoadingSpinner" class="loader ml-2 w-6 h-6 hidden"></div>
-                        </button>
-                        <div id="brushingQuestionResult" class="mt-4 p-3 bg-gray-700 border border-cyan-400 rounded-lg text-left text-gray-200 hidden">
-                            <p id="brushingQuestionText"></p>
-                        </div>
-                        <div id="brushingQuestionError" class="mt-4 p-3 bg-red-900 border border-red-500 rounded-lg text-left text-red-200 hidden">
-                            <p>Could not get a response. Please try again.</p>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Innovation Card 2: Scalp Health Analyzer with AI Integration -->
+                <!-- Innovation Card 2: Scalp Health Analyzer -->
                 <div class="card text-left">
                     <img src="https://placehold.co/600x400/6366f1/ffffff?text=Scalp+Health+Analyzer" alt="Scalp Health Analyzer" class="rounded-lg mb-4 w-full h-auto border border-purple-600">
                     <h3 class="text-xl font-bold mb-2 text-purple-400">Scalp Health Analyzer</h3>
                     <p class="text-gray-300 mb-4">A glimpse into personalized hair care with devices that analyze scalp health and recommend tailored product regimens for optimal waves.</p>
                     <a href="#" class="text-purple-400 hover:underline font-semibold">See Demo &rarr;</a>
-
-                    <!-- Scalp Health Check - AI Integration -->
-                    <div class="mt-4 p-4 bg-gray-800 rounded-lg border border-gray-600">
-                        <h4 class="text-xl font-bold mb-3 text-purple-300">Scalp Health Check 🩺</h4>
-                        <p class="text-gray-400 text-sm mb-3">Describe your scalp concerns and get personalized analysis and tips!</p>
-                        <textarea id="scalpHealthInput" rows="3" class="shadow appearance-none border border-gray-600 rounded w-full py-2 px-3 bg-gray-700 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="e.g., 'My scalp is very dry and flakes, with some itching.'"></textarea>
-                        <button id="analyzeScalpBtn" class="btn-primary w-full text-sm mt-3 flex items-center justify-center bg-gradient-to-r from-purple-500 to-fuchsia-600 hover:from-purple-600 hover:to-fuchsia-700">
-                            <span id="analyzeScalpButtonText">Analyze Scalp</span>
-                            <div id="analyzeScalpLoadingSpinner" class="loader ml-2 w-6 h-6 hidden"></div>
-                        </button>
-                        <div id="scalpHealthResult" class="mt-4 p-3 bg-gray-700 border border-purple-400 rounded-lg text-left text-gray-200 hidden">
-                            <p id="scalpHealthText"></p>
-                        </div>
-                        <div id="scalpHealthError" class="mt-4 p-3 bg-red-900 border border-red-500 rounded-lg text-left text-red-200 hidden">
-                            <p>Could not get a response. Please try again.</p>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Innovation Card 3: Eco-Friendly Wave Formulations (Unchanged) -->
+                <!-- Innovation Card 3: Eco-Friendly Wave Formulations -->
                 <div class="card text-left">
                     <!-- Placeholder image for the innovation -->
                     <img src="https://placehold.co/600x400/ef4444/ffffff?text=Eco-Friendly+Formulas" alt="Eco-Friendly Formulas" class="rounded-lg mb-4 w-full h-auto border border-red-600">
                     <h3 class="text-xl font-bold mb-2 text-fuchsia-400">Eco-Friendly Wave Formulations</h3>
                     <p class="text-gray-300 mb-4">Our commitment to sustainability: developing effective wave products with biodegradable ingredients and minimal environmental impact.</p>
                     <a href="#" class="text-fuchsia-400 hover:underline font-semibold">Learn More &rarr;</a>
+                </div>
+
+                 <!-- AI Tool Card: Smart Brushing Q&A (from previous version) -->
+                <div class="card text-left col-span-1 md:col-span-2 lg:col-span-1 mx-auto">
+                    <h3 class="text-xl font-bold mb-3 text-cyan-300">Smart Brushing Q&A 🗨️</h3>
+                    <p class="text-gray-400 text-sm mb-3">Ask our AI for tips on brushing techniques, brush care, or wave maintenance!</p>
+                    <textarea id="brushingQuestionInput" rows="3" class="shadow appearance-none border border-gray-600 rounded w-full py-2 px-3 bg-gray-700 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="e.g., 'How often should I brush for 360 waves?'"></textarea>
+                    <button id="askBrushingQuestionBtn" class="btn-primary w-full text-sm mt-3 flex items-center justify-center">
+                        <span id="brushingQuestionButtonText">Ask Guru AI</span>
+                        <div id="brushingQuestionLoadingSpinner" class="loader ml-2 w-6 h-6 hidden"></div>
+                    </button>
+                    <div id="brushingQuestionResult" class="mt-4 p-3 bg-gray-700 border border-cyan-400 rounded-lg text-left text-gray-200 hidden">
+                        <p id="brushingQuestionText"></p>
+                    </div>
+                    <div id="brushingQuestionError" class="mt-4 p-3 bg-red-900 border border-red-500 rounded-lg text-left text-red-200 hidden">
+                        <p>Could not get a response. Please try again.</p>
+                    </div>
+                </div>
+
+                <!-- AI Tool Card: Scalp Health Check (from previous version) -->
+                <div class="card text-left col-span-1 md:col-span-2 lg:col-span-1 mx-auto">
+                    <h3 class="text-xl font-bold mb-3 text-purple-300">Scalp Health Check 🩺</h3>
+                    <p class="text-gray-400 text-sm mb-3">Describe your scalp concerns and get personalized analysis and tips!</p>
+                    <textarea id="scalpHealthInput" rows="3" class="shadow appearance-none border border-gray-600 rounded w-full py-2 px-3 bg-gray-700 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="e.g., 'My scalp is very dry and flakes, with some itching.'"></textarea>
+                    <button id="analyzeScalpBtn" class="btn-primary w-full text-sm mt-3 flex items-center justify-center bg-gradient-to-r from-purple-500 to-fuchsia-600 hover:from-purple-600 hover:to-fuchsia-700">
+                        <span id="analyzeScalpButtonText">Analyze Scalp</span>
+                        <div id="analyzeScalpLoadingSpinner" class="loader ml-2 w-6 h-6 hidden"></div>
+                    </button>
+                    <div id="scalpHealthResult" class="mt-4 p-3 bg-gray-700 border border-purple-400 rounded-lg text-left text-gray-200 hidden">
+                        <p id="scalpHealthText"></p>
+                    </div>
+                    <div id="scalpHealthError" class="mt-4 p-3 bg-red-900 border border-red-500 rounded-lg text-left text-red-200 hidden">
+                        <p>Could not get a response. Please try again.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" class="py-16 md:py-24 bg-gradient-to-br from-indigo-900 to-purple-900 text-white">
+        <div class="container mx-auto px-4 text-center max-w-4xl">
+            <h2 class="section-heading">Community: Share & Learn</h2>
+            <p class="text-xl text-gray-300 mb-12">Connect with fellow wavers, share your wisdom, and get insights from the Ask Guru AI.</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Share Your Wisdom Form -->
+                <div class="bg-gray-800 bg-opacity-70 backdrop-blur-sm rounded-xl shadow-lg p-8 border border-gray-700 text-left">
+                    <h3 class="text-3xl font-bold text-cyan-400 mb-6">Share Your Wave Wisdom</h3>
+                    <p class="text-gray-300 mb-6">Help the community grow by sharing your best wave tips or personal success stories!</p>
+                    <form id="wave-tip-form">
+                        <div class="mb-4">
+                            <label for="community-name" class="block text-gray-200 text-sm font-bold mb-2">Your Name/Handle</label>
+                            <input type="text" id="community-name" class="shadow appearance-none border border-gray-600 rounded w-full py-3 px-4 bg-gray-700 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Wave Lord" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="wave-content" class="block text-gray-200 text-sm font-bold mb-2">Your Tip or Story</label>
+                            <textarea id="wave-content" rows="6" class="shadow appearance-none border border-gray-600 rounded w-full py-3 px-4 bg-gray-700 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="My secret for deep waves is..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary w-full">Submit My Wisdom</button>
+                    </form>
+                    <div id="form-message" class="mt-4 text-center text-sm font-semibold"></div>
+                </div>
+
+                <!-- Ask Guru Section -->
+                <div class="bg-gray-800 bg-opacity-70 backdrop-blur-sm rounded-xl shadow-lg p-8 border border-gray-700 text-left">
+                    <h3 class="text-3xl font-bold text-fuchsia-400 mb-6">Ask the Community Guru</h3>
+                    <p class="text-gray-300 mb-6">Get personalized wave tips and advice powered by community insights and advanced AI.</p>
+                    <div class="mb-4">
+                        <label for="ai-question" class="block text-gray-200 text-sm font-bold mb-2">Your Question</label>
+                        <input type="text" id="ai-question" class="shadow appearance-none border border-gray-600 rounded w-full py-3 px-4 bg-gray-700 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-fuchsia-500" placeholder="How do I get rid of forks?">
+                    </div>
+                    <button id="ask-ai-btn" class="btn-primary w-full">Ask the Guru</button>
+                    <div id="ai-response-container" class="mt-6 p-4 bg-gray-700 rounded-lg hidden">
+                        <p class="text-gray-300 text-sm italic">Ask Guru says:</p>
+                        <p id="ai-response" class="text-white mt-2"></p>
+                    </div>
+                    <div id="ai-loading-indicator" class="mt-4 text-center text-fuchsia-400 hidden">
+                        <p>Consulting the Guru... Please wait.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Tips & Stories Display -->
+            <div class="mt-16 text-left">
+                <h3 class="text-3xl font-bold text-white mb-8 text-center">Community Wave Tips & Stories</h3>
+                <div id="community-tips-display" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Community tips will be loaded here -->
+                    <p class="text-center text-gray-400 col-span-full" id="no-tips-message">No tips yet. Be the first to share your wisdom!</p>
                 </div>
             </div>
         </div>
@@ -473,7 +628,6 @@
             <h2 class="section-heading">Connect with Ask Guru</h2>
             <p class="text-xl text-gray-300 mb-12">Have a question about wave techniques, products, or just want to connect?</p>
 
-            <!-- Contact Form -->
             <form class="bg-gray-800 bg-opacity-70 backdrop-blur-sm rounded-xl shadow-lg p-8 border border-gray-700">
                 <div class="mb-6 text-left">
                     <label for="name" class="block text-gray-200 text-sm font-bold mb-2">Name</label>
@@ -531,28 +685,115 @@
     </div>
 
 
-    <script>
-        // JavaScript for mobile menu toggle functionality
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden'); // Toggle the 'hidden' class to show/hide the menu
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="module">
+        // Firebase Imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global Firebase variables (provided by Canvas environment)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db;
+        let auth;
+        let userId;
+
+        // Get the global Firebase error message display element
+        const firebaseErrorMessageDisplay = document.getElementById('firebase-error-message');
+
+        // Initialize Firebase and set up authentication
+        async function initializeFirebase() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Clear any previous error messages if initialization starts
+                if (firebaseErrorMessageDisplay) {
+                    firebaseErrorMessageDisplay.classList.add('hidden');
+                    firebaseErrorMessageDisplay.textContent = '';
+                }
+
+                // Sign in using custom token or anonymously if token is not available
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                    console.log("Signed in with custom token.");
+                } else {
+                    await signInAnonymously(auth);
+                    console.log("Signed in anonymously.");
+                }
+
+                // Listen for auth state changes to get the current user ID
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("User ID:", userId);
+                        loadCommunityTips(); // Load tips once user is authenticated
+                    } else {
+                        // User is signed out. For anonymous, a new ID might be generated on next session.
+                        console.log("User signed out or no user.");
+                        userId = null; // Clear userId if signed out
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error initializing Firebase or signing in:", error);
+                if (firebaseErrorMessageDisplay) {
+                    if (error.code === 'auth/network-request-failed') {
+                        firebaseErrorMessageDisplay.textContent = "Network error connecting to our services. Please check your internet connection or try refreshing the page.";
+                    } else {
+                        firebaseErrorMessageDisplay.textContent = `Error initializing features: ${error.message}. Please try refreshing the page.`;
+                    }
+                    firebaseErrorMessageDisplay.classList.remove('hidden');
+                }
+            }
         }
 
-        // Smooth scrolling for all internal navigation links (those starting with '#')
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault(); // Prevent default anchor link behavior (instant jump)
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth' // Scroll smoothly to the target section
-                });
-                // Close mobile menu after clicking a link, if it's open
-                if (!document.getElementById('mobile-menu').classList.contains('hidden')) {
-                    toggleMobileMenu();
-                }
-            });
-        });
+        // --- SLIDESHOW LOGIC ---
+        let slideIndex = 1;
+        let autoSlideTimeout; // To store the timeout for auto-advancing slides
 
-        // Function to make Gemini API calls with exponential backoff
+        // Function to display current slide
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+
+            // Wrap around logic for slides
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+
+            // Hide all slides and remove 'active-dot' class from all dots
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active-dot", "");
+            }
+
+            // Display the current slide and mark the current dot as active
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active-dot";
+
+            // Clear any existing auto-advance timeout and set a new one
+            clearTimeout(autoSlideTimeout);
+            autoSlideTimeout = setTimeout(() => plusSlides(1), 5000); // Change image every 5 seconds
+        }
+
+        // Next/previous controls
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        // Thumbnail image controls
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        // --- GENERAL HELPER FOR GEMINI API CALLS ---
         async function callGeminiAPI(prompt, outputElement, errorElement, loadingSpinner, buttonTextElement) {
             let chatHistory = [];
             chatHistory.push({ role: "user", parts: [{ text: prompt }] });
@@ -560,6 +801,13 @@
             const payload = { contents: chatHistory };
             const apiKey = ""; // Canvas will automatically provide this at runtime
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            const originalButtonText = buttonTextElement.dataset.originalText || buttonTextElement.textContent;
+            buttonTextElement.textContent = 'Processing...';
+            loadingSpinner.classList.remove('hidden');
+            buttonTextElement.parentElement.disabled = true;
+            outputElement.parentElement.classList.add('hidden'); // Hide result container
+            errorElement.classList.add('hidden'); // Hide error message
 
             const maxRetries = 5;
             let currentRetry = 0;
@@ -600,9 +848,8 @@
                         outputElement.innerHTML = '';
                     }
                 } finally {
-                    // Re-enable button and hide spinner after all retries or success
                     if (currentRetry >= maxRetries || success) {
-                        buttonTextElement.textContent = buttonTextElement.dataset.originalText || 'Submit'; // Restore original text
+                        buttonTextElement.textContent = originalButtonText; // Restore original text
                         loadingSpinner.classList.add('hidden');
                         buttonTextElement.parentElement.disabled = false;
                     }
@@ -610,117 +857,50 @@
             }
         }
 
-        // Initialize Gemini API Integration for Brush Recommendation (existing)
-        document.addEventListener('DOMContentLoaded', () => {
-            const getBrushRecommendationBtn = document.getElementById('getBrushRecommendationBtn');
-            const waveGoalInput = document.getElementById('waveGoalInput');
-            const recommendationResult = document.getElementById('recommendationResult');
-            const recommendationText = document.getElementById('recommendationText');
-            const recommendationError = document.getElementById('recommendationError');
-            const recommendationLoadingSpinner = document.getElementById('recommendationLoadingSpinner');
-            const recommendationButtonText = document.getElementById('recommendationButtonText');
+        // --- COMMUNITY SECTION (Firestore Data Loading) ---
+        // Function to load and display community tips from Firestore
+        async function loadCommunityTips() {
+            if (!db || !userId) {
+                console.log("Firebase not initialized or user not authenticated yet.");
+                return;
+            }
 
-            // Store original button text for restoration
-            recommendationButtonText.dataset.originalText = recommendationButtonText.textContent;
+            const communityTipsDisplay = document.getElementById('community-tips-display');
+            const noTipsMessage = document.getElementById('no-tips-message');
 
-            getBrushRecommendationBtn.addEventListener('click', async () => {
-                const userPrompt = waveGoalInput.value.trim();
-                if (!userPrompt) {
-                    recommendationError.classList.remove('hidden');
-                    recommendationError.innerHTML = '<p>Please describe your hair and wave goals to get a recommendation.</p>';
-                    recommendationResult.classList.add('hidden');
-                    return;
-                }
+            try {
+                // Public data collection for community tips
+                const tipsCollectionRef = collection(db, `artifacts/${appId}/public/data/communityTips`);
+                const q = query(tipsCollectionRef, orderBy('timestamp', 'desc')); // Order by newest first
 
-                // Show loading spinner and disable button
-                recommendationButtonText.textContent = 'Generating...';
-                recommendationLoadingSpinner.classList.remove('hidden');
-                getBrushRecommendationBtn.disabled = true;
-                recommendationResult.classList.add('hidden');
-                recommendationError.classList.add('hidden');
+                onSnapshot(q, (snapshot) => {
+                    communityTipsDisplay.innerHTML = ''; // Clear existing tips
+                    if (snapshot.empty) {
+                        noTipsMessage.classList.remove('hidden');
+                    } else {
+                        noTipsMessage.classList.add('hidden');
+                        snapshot.forEach((doc) => {
+                            const tip = doc.data();
+                            const tipElement = document.createElement('div');
+                            tipElement.className = 'card p-6 border-blue-600 shadow-lg shadow-blue-600/20 text-left';
+                            tipElement.innerHTML = `
+                                <p class="text-gray-200 text-lg mb-2">${marked.parse(tip.content || '')}</p>
+                                <p class="text-sm text-gray-400 font-semibold">- ${tip.author || 'Anonymous Waver'}</p>
+                                <p class="text-xs text-gray-500 mt-1">${tip.timestamp ? new Date(tip.timestamp.seconds * 1000).toLocaleString() : 'Just now'}</p>
+                            `;
+                            communityTipsDisplay.appendChild(tipElement);
+                        });
+                    }
+                }, (error) => {
+                    console.error("Error listening to community tips:", error);
+                    communityTipsDisplay.innerHTML = '<p class="text-red-400">Failed to load community tips. Please try again later.</p>';
+                });
+            } catch (error) {
+                console.error("Error setting up Firestore listener:", error);
+            }
+        }
 
-                const prompt = `As a 360 wave brush expert for Ask Guru, recommend the best brush type (Hard, Medium, or Soft) for the following user description. Explain why and give a short tip related to brushing.
-
-User description: "${userPrompt}"
-
-Available brushes:
-- Hard Texture Wave Brush: Designed for coarser hair textures, this brush provides maximum pull and deep compression, ideal for establishing and maintaining strong wave patterns. Price: $24.99
-- Medium Texture Wave Brush: Our versatile medium brush offers a balanced blend of firmness and flexibility, perfect for daily brushing and maintaining well-defined waves across various hair types. Price: $22.99
-- Soft Texture Wave Brush: Gentle yet effective, this brush is ideal for laying down frizz, polishing your waves, and use on sensitive scalps or fine hair textures, providing a natural shine. Price: $19.99
-
-Please respond in a friendly, concise, and helpful tone.`;
-
-                await callGeminiAPI(prompt, recommendationText, recommendationError, recommendationLoadingSpinner, recommendationButtonText);
-            });
-
-            // Smart Brushing Q&A (New Feature)
-            const askBrushingQuestionBtn = document.getElementById('askBrushingQuestionBtn');
-            const brushingQuestionInput = document.getElementById('brushingQuestionInput');
-            const brushingQuestionResult = document.getElementById('brushingQuestionResult');
-            const brushingQuestionText = document.getElementById('brushingQuestionText');
-            const brushingQuestionError = document.getElementById('brushingQuestionError');
-            const brushingQuestionLoadingSpinner = document.getElementById('brushingQuestionLoadingSpinner');
-            const brushingQuestionButtonText = document.getElementById('brushingQuestionButtonText');
-
-            brushingQuestionButtonText.dataset.originalText = brushingQuestionButtonText.textContent;
-
-            askBrushingQuestionBtn.addEventListener('click', async () => {
-                const userQuestion = brushingQuestionInput.value.trim();
-                if (!userQuestion) {
-                    brushingQuestionError.classList.remove('hidden');
-                    brushingQuestionError.innerHTML = '<p>Please ask a question about brushing.</p>';
-                    brushingQuestionResult.classList.add('hidden');
-                    return;
-                }
-
-                brushingQuestionButtonText.textContent = 'Thinking...';
-                brushingQuestionLoadingSpinner.classList.remove('hidden');
-                askBrushingQuestionBtn.disabled = true;
-                brushingQuestionResult.classList.add('hidden');
-                brushingQuestionError.classList.add('hidden');
-
-                const prompt = `As a 360 wave expert and brush technician for Ask Guru, please provide helpful information and tips regarding the following question about brushing techniques, brush care, or wave maintenance. Your advice should be practical, clear, and encouraging.
-
-Question: "${userQuestion}"`;
-
-                await callGeminiAPI(prompt, brushingQuestionText, brushingQuestionError, brushingQuestionLoadingSpinner, brushingQuestionButtonText);
-            });
-
-            // Scalp Health Analyzer (New Feature)
-            const analyzeScalpBtn = document.getElementById('analyzeScalpBtn');
-            const scalpHealthInput = document.getElementById('scalpHealthInput');
-            const scalpHealthResult = document.getElementById('scalpHealthResult');
-            const scalpHealthText = document.getElementById('scalpHealthText');
-            const scalpHealthError = document.getElementById('scalpHealthError');
-            const analyzeScalpLoadingSpinner = document.getElementById('analyzeScalpLoadingSpinner');
-            const analyzeScalpButtonText = document.getElementById('analyzeScalpButtonText');
-
-            analyzeScalpButtonText.dataset.originalText = analyzeScalpButtonText.textContent;
-
-            analyzeScalpBtn.addEventListener('click', async () => {
-                const scalpDescription = scalpHealthInput.value.trim();
-                if (!scalpDescription) {
-                    scalpHealthError.classList.remove('hidden');
-                    scalpHealthError.innerHTML = '<p>Please describe your scalp concerns to get an analysis.</p>';
-                    scalpHealthResult.classList.add('hidden');
-                    return;
-                }
-
-                analyzeScalpButtonText.textContent = 'Analyzing...';
-                analyzeScalpLoadingSpinner.classList.remove('hidden');
-                analyzeScalpBtn.disabled = true;
-                scalpHealthResult.classList.add('hidden');
-                scalpHealthError.classList.add('hidden');
-
-                const prompt = `As a scalp health specialist for Ask Guru, analyze the following scalp description and provide insights into potential issues. Then, suggest actionable steps and a personalized path for improving scalp health, especially as it relates to achieving healthy 360 waves. Be empathetic and provide practical advice.
-
-Scalp description: "${scalpDescription}"`;
-
-                await callGeminiAPI(prompt, scalpHealthText, scalpHealthError, analyzeScalpLoadingSpinner, analyzeScalpButtonText);
-            });
-        });
-
-        // --- Waver Details Modal Logic ---
+        // --- WAVER DETAILS MODAL LOGIC (Existing global data and functions) ---
         const waverData = {
             "waver1": {
                 name: "Alpha Wave",
@@ -858,48 +1038,360 @@ Scalp description: "${scalpDescription}"`;
             const modalSocials = document.getElementById('modalWaverSocials');
 
             // Populate modal with waver data
-            modalImage.src = waver.image;
-            modalImage.alt = `${waver.name} Kill Shot`;
-            modalName.textContent = waver.name;
-            modalCity.textContent = waver.city ? `City: ${waver.city}` : '';
-            modalEvents.textContent = waver.events || 'No upcoming events listed at this time.';
-            modalTeam.textContent = waver.team ? `Team: ${waver.team}` : 'Independent Waver';
+            if (modalImage) {
+                modalImage.src = waver.image;
+                modalImage.alt = `${waver.name} Kill Shot`;
+            }
+            if (modalName) modalName.textContent = waver.name;
+            if (modalCity) modalCity.textContent = waver.city ? `City: ${waver.city}` : '';
+            if (modalEvents) modalEvents.textContent = waver.events || 'No upcoming events listed at this time.';
+            if (modalTeam) modalTeam.textContent = waver.team ? `Team: ${waver.team}` : 'Independent Waver';
 
             // Clear previous social links and add new ones
-            modalSocials.innerHTML = '';
-            if (waver.social) {
-                if (waver.social.instagram) {
-                    modalSocials.innerHTML += `<a href="https://instagram.com/${waver.social.instagram}" target="_blank" rel="noopener noreferrer" class="social-icon">
-                        <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="instagram" class="svg-inline--fa fa-instagram" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M224.1 129.8c-25.5 0-46.1 20.6-46.1 46.1v278.1c0 25.5 20.6 46.1 46.1 46.1s46.1-20.6 46.1-46.1V175.9c0-25.5-20.6-46.1-46.1-46.1zM280 200h-32v32h32zm0 64h-32v32h32zm-64 64h-32v32h32zm-64-64h-32v32h32zm128 0h-32v32h32zm0-64h-32v32h32zM0 64C0 28.7 28.7 0 64 0h320c35.3 0 64 28.7 64 64v384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm416 0v384c0 17.6-14.4 32-32 32H64c-17.6 0-32-14.4-32-32V64c0-17.6 14.4-32 32-32h320c17.6 0 32 14.4 32 32z"/></svg>
-                    </a>`;
-                }
-                if (waver.social.youtube) {
-                    modalSocials.innerHTML += `<a href="https://youtube.com/c/${waver.social.youtube}" target="_blank" rel="noopener noreferrer" class="social-icon">
-                        <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="youtube" class="svg-inline--fa fa-youtube" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M549.655 124.083c-6.281-23.65-24.787-42.156-48.437-48.437C495.878 64 288 64 288 64S80.122 64 48.437 75.646c-23.65 6.281-42.156 24.787-48.437 48.437C0 160 0 256 0 256s0 96 11.646 131.917c6.281 23.65 24.787 42.156 48.437 48.437C80.122 448 288 448 288 448s207.878 0 239.563-11.646c23.65-6.281 42.156-24.787 48.437-48.437C576 352 576 256 576 256s0-96-11.645-131.917zM288 368c-44.183 0-80-35.817-80-80s35.817-80 80-80 80 35.817 80 80-35.817 80-80 80z"/></svg>
-                    </a>`;
-                }
-                if (waver.social.tiktok) {
-                    modalSocials.innerHTML += `<a href="https://tiktok.com/@${waver.social.tiktok}" target="_blank" rel="noopener noreferrer" class="social-icon">
-                        <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="tiktok" class="svg-inline--fa fa-tiktok" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M448 209.914a210.05 210.05 0 0 1-122.868 36.877V471.95c0 10.71-8.718 19.428-19.428 19.428h-53.535a19.428 19.428 0 0 1-19.428-19.428V19.428c0-10.71 8.718-19.428 19.428-19.428H325.2c10.71 0 19.428 8.718 19.428 19.428V241.74a10.063 10.063 0 0 0-4.043 1.054c-11.83 2.924-21.724 10.223-28.72 20.817a59.542 59.542 0 0 0-8.913 29.563c0 10.71-8.718 19.428-19.428 19.428H19.428C8.718 312.986 0 304.268 0 293.558V239.912c0-10.71 8.718-19.428 19.428-19.428H148.18c10.71 0 19.428 8.718 19.428 19.428v11.854c-1.428 4.49-3.235 8.874-5.32 13.064l-4.73 9.46A210.05 210.05 0 0 1 448 209.914z"/></svg>
-                    </a>`;
+            if (modalSocials) {
+                modalSocials.innerHTML = '';
+                if (waver.social) {
+                    if (waver.social.instagram) {
+                        modalSocials.innerHTML += `<a href="https://instagram.com/${waver.social.instagram}" target="_blank" rel="noopener noreferrer" class="social-icon">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="instagram" class="svg-inline--fa fa-instagram" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M224.1 129.8c-25.5 0-46.1 20.6-46.1 46.1v278.1c0 25.5 20.6 46.1 46.1 46.1s46.1-20.6 46.1-46.1V175.9c0-25.5-20.6-46.1-46.1-46.1zM280 200h-32v32h32zm0 64h-32v32h32zm-64 64h-32v32h32zm-64-64h-32v32h32zm128 0h-32v32h32zm0-64h-32v32h32zM0 64C0 28.7 28.7 0 64 0h320c35.3 0 64 28.7 64 64v384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm416 0v384c0 17.6-14.4 32-32 32H64c-17.6 0-32-14.4-32-32V64c0-17.6 14.4-32 32-32h320c17.6 0 32 14.4 32 32z"/></svg>
+                        </a>`;
+                    }
+                    if (waver.social.youtube) {
+                        modalSocials.innerHTML += `<a href="https://youtube.com/c/${waver.social.youtube}" target="_blank" rel="noopener noreferrer" class="social-icon">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="youtube" class="svg-inline--fa fa-youtube" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M549.655 124.083c-6.281-23.65-24.787-42.156-48.437-48.437C495.878 64 288 64 288 64S80.122 64 48.437 75.646c-23.65 6.281-42.156 24.787-48.437 48.437C0 160 0 256 0 256s0 96 11.646 131.917c6.281 23.65 24.787 42.156 48.437 48.437C80.122 448 288 448 288 448s207.878 0 239.563-11.646c23.65-6.281 42.156-24.787 48.437-48.437C576 352 576 256 576 256s0-96-11.645-131.917zM288 368c-44.183 0-80-35.817-80-80s35.817-80 80-80 80 35.817 80 80-35.817 80-80 80z"/></svg>
+                        </a>`;
+                    }
+                    if (waver.social.tiktok) {
+                        modalSocials.innerHTML += `<a href="https://tiktok.com/@${waver.social.tiktok}" target="_blank" rel="noopener noreferrer" class="social-icon">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="tiktok" class="svg-inline--fa fa-tiktok" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M448 209.914a210.05 210.05 0 0 1-122.868 36.877V471.95c0 10.71-8.718 19.428-19.428 19.428h-53.535a19.428 19.428 0 0 1-19.428-19.428V19.428c0-10.71 8.718-19.428 19.428-19.428H325.2c10.71 0 19.428 8.718 19.428 19.428V241.74a10.063 10.063 0 0 0-4.043 1.054c-11.83 2.924-21.724 10.223-28.72 20.817a59.542 59.542 0 0 0-8.913 29.563c0 10.71-8.718 19.428-19.428 19.428H19.428C8.718 312.986 0 304.268 0 293.558V239.912c0-10.71 8.718-19.428 19.428-19.428H148.18c10.71 0 19.428 8.718 19.428 19.428v11.854c-1.428 4.49-3.235 8.874-5.32 13.064l-4.73 9.46A210.05 210.05 0 0 1 448 209.914z"/></svg>
+                        </a>`;
+                    }
                 }
             }
 
             // Show the modal
-            modal.classList.remove('hidden');
+            if (modal) modal.classList.remove('hidden');
         }
 
         function hideWaverDetails() {
-            document.getElementById('waverDetailsModal').classList.add('hidden');
+            const modal = document.getElementById('waverDetailsModal');
+            if (modal) modal.classList.add('hidden');
         }
 
-        // Close modal when clicking outside of it
-        document.getElementById('waverDetailsModal').addEventListener('click', (e) => {
-            if (e.target.id === 'waverDetailsModal') {
-                hideWaverDetails();
+        // --- Consolidated DOMContentLoaded Listener ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Initialize Firebase first
+            await initializeFirebase();
+
+            // Initialize slideshow
+            showSlides(slideIndex);
+
+            // Initialize Smart Brushing Q&A
+            const askBrushingQuestionBtn = document.getElementById('askBrushingQuestionBtn');
+            const brushingQuestionInput = document.getElementById('brushingQuestionInput');
+            const brushingQuestionResult = document.getElementById('brushingQuestionResult');
+            const brushingQuestionText = document.getElementById('brushingQuestionText');
+            const brushingQuestionError = document.getElementById('brushingQuestionError');
+            const brushingQuestionLoadingSpinner = document.getElementById('brushingQuestionLoadingSpinner');
+            const brushingQuestionButtonText = document.getElementById('brushingQuestionButtonText');
+
+            if (brushingQuestionButtonText && askBrushingQuestionBtn) { // Ensure button and text span exist
+                brushingQuestionButtonText.dataset.originalText = brushingQuestionButtonText.textContent;
+
+                askBrushingQuestionBtn.addEventListener('click', async () => {
+                    const userQuestion = brushingQuestionInput.value.trim();
+                    if (!userQuestion) {
+                        if (brushingQuestionError) {
+                            brushingQuestionError.classList.remove('hidden');
+                            brushingQuestionError.innerHTML = '<p>Please ask a question about brushing.</p>';
+                        }
+                        if (brushingQuestionResult) brushingQuestionResult.classList.add('hidden');
+                        return;
+                    }
+
+                    const prompt = `As a 360 wave expert and brush technician for Ask Guru, please provide helpful information and tips regarding the following question about brushing techniques, brush care, or wave maintenance. Your advice should be practical, clear, and encouraging.
+
+Question: "${userQuestion}"`;
+
+                    await callGeminiAPI(prompt, brushingQuestionText, brushingQuestionError, brushingQuestionLoadingSpinner, brushingQuestionButtonText);
+                });
+            } else {
+                console.error("Smart Brushing Q&A elements not found correctly.");
             }
+
+            // Initialize Scalp Health Analyzer
+            const analyzeScalpBtn = document.getElementById('analyzeScalpBtn');
+            const scalpHealthInput = document.getElementById('scalpHealthInput');
+            const scalpHealthResult = document.getElementById('scalpHealthResult');
+            const scalpHealthText = document.getElementById('scalpHealthText');
+            const scalpHealthError = document.getElementById('scalpHealthError');
+            const analyzeScalpLoadingSpinner = document.getElementById('analyzeScalpLoadingSpinner');
+            const analyzeScalpButtonText = document.getElementById('analyzeScalpButtonText');
+
+            if (analyzeScalpButtonText && analyzeScalpBtn) { // Ensure button and text span exist
+                analyzeScalpButtonText.dataset.originalText = analyzeScalpButtonText.textContent;
+
+                analyzeScalpBtn.addEventListener('click', async () => {
+                    const scalpDescription = scalpHealthInput.value.trim();
+                    if (!scalpDescription) {
+                        if (scalpHealthError) {
+                            scalpHealthError.classList.remove('hidden');
+                            scalpHealthError.innerHTML = '<p>Please describe your scalp concerns to get an analysis.</p>';
+                        }
+                        if (scalpHealthResult) scalpHealthResult.classList.add('hidden');
+                        return;
+                    }
+
+                    const prompt = `As a scalp health specialist for Ask Guru, analyze the following scalp description and provide insights into potential issues. Then, suggest actionable steps and a personalized path for improving scalp health, especially as it relates to achieving healthy 360 waves. Be empathetic and provide practical advice.
+
+Scalp description: "${scalpDescription}"`;
+
+                    await callGeminiAPI(prompt, scalpHealthText, scalpHealthError, analyzeScalpLoadingSpinner, analyzeScalpButtonText);
+                });
+            } else {
+                console.error("Scalp Health Analyzer elements not found correctly.");
+            }
+
+
+            // Initialize Personalized Wave Journey Planner
+            const waveRoutineForm = document.getElementById('wave-routine-form');
+            const waveStageSelect = document.getElementById('wave-stage');
+            const hairTypeSelect = document.getElementById('hair-type');
+            const waveGoalTextarea = document.getElementById('wave-goal');
+            const routineLoadingIndicator = document.getElementById('routine-loading-indicator');
+            const routineResponseContainer = document.getElementById('routine-response-container');
+            const routineResponse = document.getElementById('routine-response');
+            const getRoutineButton = waveRoutineForm ? waveRoutineForm.querySelector('button') : null; // Get button only if form exists
+
+            if (waveRoutineForm && getRoutineButton && waveStageSelect && hairTypeSelect && waveGoalTextarea) { // Ensure all core elements exist
+                getRoutineButton.dataset.originalText = getRoutineButton.textContent; // Store original text
+
+                waveRoutineForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const waveStage = waveStageSelect.value;
+                    const hairType = hairTypeSelect.value;
+                    const waveGoal = waveGoalTextarea.value.trim();
+
+                    if (!waveStage || !hairType || !waveGoal) {
+                        // Use a custom message box or display an error within the form instead of alert()
+                        // For now, will use a simple console log for debugging purposes.
+                        console.error('Please fill in all fields to get your custom routine!');
+                        if(routineResponse) {
+                            routineResponse.innerHTML = '<p class="text-red-400">Please fill in all fields to get your custom routine!</p>';
+                            if (routineResponseContainer) routineResponseContainer.classList.remove('hidden');
+                        }
+                        return;
+                    }
+
+                    if (routineLoadingIndicator) routineLoadingIndicator.classList.remove('hidden');
+                    if (routineResponseContainer) routineResponseContainer.classList.add('hidden');
+                    if (getRoutineButton) {
+                        getRoutineButton.disabled = true;
+                        getRoutineButton.textContent = 'Generating...';
+                    }
+
+
+                    const prompt = `As the Ask Guru AI, create a personalized 360 wave routine based on the following user input:
+                    Current Wave Stage: ${waveStage}
+                    Hair Texture: ${hairType}
+                    Wave Goals: ${waveGoal}
+
+                    Provide a structured routine with daily steps, product recommendations (mentioning general types, not specific brands, but hint at what Ask Guru offers like brushes, shampoos, pomades), and key tips. Make it encouraging and easy to follow. Use Markdown for formatting (e.g., bold for steps, bullet points).`;
+
+                    try {
+                        let chatHistory = [];
+                        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                        const payload = { contents: chatHistory };
+                        const apiKey = "";
+                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        const result = await response.json();
+
+                        if (result.candidates && result.candidates.length > 0 &&
+                            result.candidates[0].content && result.candidates[0].content.parts &&
+                            result.candidates[0].content.parts.length > 0) {
+                            if (routineResponse) routineResponse.innerHTML = marked.parse(result.candidates[0].content.parts[0].text); // Render Markdown
+                            if (routineResponseContainer) routineResponseContainer.classList.remove('hidden');
+                        } else {
+                            if (routineResponse) routineResponse.innerHTML = '<p class="text-red-400">Sorry, I could not generate a routine. Please try again.</p>';
+                            if (routineResponseContainer) routineResponseContainer.classList.remove('hidden');
+                        }
+                    } catch (error) {
+                        console.error('Error generating routine:', error);
+                        if (routineResponse) routineResponse.innerHTML = '<p class="text-red-400">An error occurred while connecting to the Guru. Please try again later.</p>';
+                        if (routineResponseContainer) routineResponseContainer.classList.remove('hidden');
+                    } finally {
+                        if (routineLoadingIndicator) routineLoadingIndicator.classList.add('hidden');
+                        if (getRoutineButton) {
+                            getRoutineButton.disabled = false;
+                            getRoutineButton.textContent = getRoutineButton.dataset.originalText;
+                        }
+                    }
+                });
+            } else {
+                console.error("Wave Journey Planner elements not found correctly.");
+            }
+
+
+            // Initialize Community Section forms/buttons
+            const waveTipForm = document.getElementById('wave-tip-form');
+            const communityNameInput = document.getElementById('community-name');
+            const waveContentTextarea = document.getElementById('wave-content');
+            const formMessage = document.getElementById('form-message');
+
+            if (waveTipForm && communityNameInput && waveContentTextarea && formMessage) { // Ensure all elements exist
+                waveTipForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    if (!db || !userId) {
+                        formMessage.textContent = "Please wait, features are still loading or there's an authentication issue.";
+                        formMessage.style.color = 'orange';
+                        return;
+                    }
+
+                    const author = communityNameInput.value.trim();
+                    const content = waveContentTextarea.value.trim();
+
+                    if (!author || !content) {
+                        formMessage.textContent = "Please enter your name/handle and your tip/story.";
+                        formMessage.style.color = 'red';
+                        return;
+                    }
+
+                    formMessage.textContent = "Submitting...";
+                    formMessage.style.color = 'cyan';
+
+                    try {
+                        // Use serverTimestamp to get server-side timestamp for consistent ordering
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/communityTips`), {
+                            author: author,
+                            content: content,
+                            timestamp: serverTimestamp(),
+                            userId: userId // Store user ID for potential future features
+                        });
+
+                        formMessage.textContent = "Your wisdom has been shared!";
+                        formMessage.style.color = 'lightgreen';
+                        waveTipForm.reset(); // Clear form
+                    } catch (error) {
+                        console.error("Error adding document:", error);
+                        formMessage.textContent = "Failed to share wisdom. Please try again.";
+                        formMessage.style.color = 'red';
+                    }
+                });
+            } else {
+                console.error("Community Share Wisdom elements not found correctly.");
+            }
+
+
+            // Ask the Community Guru AI
+            const askAiBtn = document.getElementById('ask-ai-btn');
+            const aiQuestionInput = document.getElementById('ai-question');
+            const aiResponseContainer = document.getElementById('ai-response-container');
+            const aiResponseText = document.getElementById('ai-response');
+            const aiLoadingIndicator = document.getElementById('ai-loading-indicator');
+            const askAiButtonText = askAiBtn ? (askAiBtn.querySelector('span') || askAiBtn) : null; // Handle if button itself is null
+
+            if (askAiBtn && aiQuestionInput && aiResponseContainer && aiResponseText && aiLoadingIndicator && askAiButtonText) { // Ensure all elements exist
+                askAiButtonText.dataset.originalText = askAiButtonText.textContent;
+
+                askAiBtn.addEventListener('click', async () => {
+                    const userQuestion = aiQuestionInput.value.trim();
+                    if (!userQuestion) {
+                        if (aiResponseContainer) {
+                             aiResponseContainer.classList.remove('hidden');
+                             if (aiResponseText) aiResponseText.innerHTML = '<p class="text-red-400">Please ask a question.</p>';
+                        }
+                        return;
+                    }
+
+                    if (aiLoadingIndicator) aiLoadingIndicator.classList.remove('hidden');
+                    if (aiResponseContainer) aiResponseContainer.classList.add('hidden');
+                    if (askAiBtn) askAiBtn.disabled = true;
+                    if (askAiButtonText) askAiButtonText.textContent = 'Asking...';
+
+                    const prompt = `As the Ask Guru AI, answer the following question about 360 waves or wave care. Be helpful, concise, and informative. Incorporate general tips that might benefit a waver.
+
+Question: "${userQuestion}"`;
+
+                    try {
+                        let chatHistory = [];
+                        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                        const payload = { contents: chatHistory };
+                        const apiKey = "";
+                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        const result = await response.json();
+
+                        if (result.candidates && result.candidates.length > 0 &&
+                            result.candidates[0].content && result.candidates[0].content.parts &&
+                            result.candidates[0].content.parts.length > 0) {
+                            if (aiResponseText) aiResponseText.textContent = result.candidates[0].content.parts[0].text;
+                            if (aiResponseContainer) aiResponseContainer.classList.remove('hidden');
+                        } else {
+                            if (aiResponseText) aiResponseText.innerHTML = '<p class="text-red-400">Sorry, the Guru is thinking. Please try again later.</p>';
+                            if (aiResponseContainer) aiResponseContainer.classList.remove('hidden');
+                        }
+                    } catch (error) {
+                        console.error('Error asking AI:', error);
+                        if (aiResponseText) aiResponseText.innerHTML = '<p class="text-red-400">An error occurred while connecting to the Guru. Please try again later.</p>';
+                        if (aiResponseContainer) aiResponseContainer.classList.remove('hidden');
+                    } finally {
+                        if (aiLoadingIndicator) aiLoadingIndicator.classList.add('hidden');
+                        if (askAiBtn) askAiBtn.disabled = false;
+                        if (askAiButtonText) askAiButtonText.textContent = askAiButtonText.dataset.originalText;
+                    }
+                });
+            } else {
+                console.error("Ask the Community Guru elements not found correctly.");
+            }
+
+            // Close modal when clicking outside of it (assuming waverDetailsModal exists)
+            const waverDetailsModal = document.getElementById('waverDetailsModal');
+            if (waverDetailsModal) {
+                waverDetailsModal.addEventListener('click', (e) => {
+                    if (e.target.id === 'waverDetailsModal') {
+                        hideWaverDetails();
+                    }
+                });
+            }
+
+        }); // End of consolidated DOMContentLoaded listener
+
+        // JavaScript for mobile menu toggle functionality (globally accessible due to onclick)
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu) mobileMenu.classList.toggle('hidden');
+        }
+
+        // Smooth scrolling for all internal navigation links (those starting with '#')
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+                // Close mobile menu after clicking a link, if it's open
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    toggleMobileMenu();
+                }
+            });
         });
     </script>
 </body>
 </html>
-
